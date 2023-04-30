@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @Service
 class ExecutionPlanService(
         private val temperatureRangeRepository: TemperatureRangeRepository,
-        private val templateRepository: TemplateRepository,
+        private val templateService: TemplateService,
         private val executionPlanRepository: ExecutionPlanRepository,
         private val shipmentRepository: ShipmentRepository
 ) {
@@ -32,7 +32,7 @@ class ExecutionPlanService(
 
         shipment.temperatureRange = temperatureRange
 
-        val template = shipment.temperatureRange?.let { templateRepository.findByTemperatureRangeId(it.id) }
+        val template = shipment.temperatureRange?.let { templateService.getByTemperatureRangeId(it.id) }
         val actions = template?.actions
         if (actions != null) {
             val executionPlan = ExecutionPlan(
@@ -57,7 +57,7 @@ class ExecutionPlanService(
 
         val shipment = executionPlanDto.shipment?.id?.let { shipmentRepository.findById(it).get() }
 
-        val template = templateRepository.findById(executionPlanDto.templateId).get()
+        val template = templateService.getById(executionPlanDto.templateId).get()
 
         val actions = template.actions
 
