@@ -16,16 +16,17 @@ export class AppComponent implements OnInit{
   shipments: Shipment[] = [];
   selectedShipment: Shipment;
 
-  constructor(private shipmentService: ShipmentService) {
+  constructor(
+      private shipmentService: ShipmentService
+  ) {
   }
 
   ngOnInit(): void {
+    this.fetchShipments()
+  }
+  fetchShipments() {
     this.shipmentService.getShipments().subscribe(data => {
       this.shipments = data;
     });
-  }
-  fetchShipments(): Shipment[] {
-    alert(this.shipments.length)
-    return this.shipments;
   }
 }
