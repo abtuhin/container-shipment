@@ -9,7 +9,7 @@
                 <div class="modal-body">
                     <div class="form-group" *ngFor="let template of templates">
                         <label>{{ template.name }}</label>
-                        <input type="radio" class="form-control" name="template-type">
+                        <input (click)="onHandleTemplate(template)" type="radio" class="form-control" name="template-type">
                     </div>
                 </div>
                 <div class="modal-footer">

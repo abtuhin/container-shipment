@@ -12,4 +12,8 @@ export class PlanService {
     getPlans(){
         return this.http.get<Plan[]>("http://localhost:8080/execution-plans")
     }
+
+    createPlan(plan) {
+        return this.http.post("http://localhost:8080/execution-plans", plan);
+    }
 }

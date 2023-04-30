@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   SEA: TransportType = TransportType.SEA;
 
   shipments: Shipment[] = [];
-  selectedShipment: Shipment;
+  selectedShipments: Shipment[] = [];
 
   constructor(
       private shipmentService: ShipmentService
@@ -28,5 +28,13 @@ export class AppComponent implements OnInit{
     this.shipmentService.getShipments().subscribe(data => {
       this.shipments = data;
     });
+  }
+
+  onHandleShipment(shipment: Shipment) {
+    if(this.selectedShipments.find(i => i.shipmentId === shipment.shipmentId)){
+      this.selectedShipments = this.selectedShipments.filter(i => i.shipmentId !== shipment.shipmentId)
+    } else {
+      this.selectedShipments.push(shipment)
+    }
   }
 }

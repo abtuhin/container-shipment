@@ -39,15 +39,15 @@ class ExecutionPlanService(
             )
 
             for (action in actions) {
-                val executionPlanAction = ExecutionPlanAction(actionName = action.name,
+                val executionPlanAction = ExecutionPlanAction(
+                        actionName = action.name,
                         isNotify = shipment.notifyCustomer,
                         isExecuted = true,
-                        executionPlan = executionPlan)
+                        executionPlan = executionPlan
+                )
                 executionPlan.actions.add(executionPlanAction)
             }
-
             executionPlanRepository.save(executionPlan)
-
         }
     }
 }

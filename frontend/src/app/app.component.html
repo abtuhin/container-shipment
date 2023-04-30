@@ -38,7 +38,7 @@
                 <tr *ngFor="let shipment of shipments">
                     <td>
                      <span class="custom-checkbox">
-                     <input type="checkbox" name="options">
+                     <input (click)="onHandleShipment(shipment)" type="checkbox" name="options">
                      <label></label>
                      </span>
                     </td>
@@ -63,4 +63,4 @@
 
 <execution-plan-component></execution-plan-component>
 
-<execution-plan-model [shipment]="selectedShipment"></execution-plan-model>
+<execution-plan-model [selectedShipments]="selectedShipments"></execution-plan-model>
