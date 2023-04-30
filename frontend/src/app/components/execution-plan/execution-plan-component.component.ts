@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PlanService} from "../../services/plan.service";
 import {Plan} from "../../models/plan.mode";
 
@@ -9,16 +9,10 @@ import {Plan} from "../../models/plan.mode";
 })
 export class ExecutionPlanComponentComponent implements OnInit {
 
+  @Input()
   plans: Plan[]
-  constructor(private planService: PlanService) {
+  constructor() {
   }
   ngOnInit(): void {
-    this.fetchPlans()
   }
-  fetchPlans() {
-    this.planService.getPlans().subscribe((data) => {
-      this.plans = data;
-    })
-  }
-
 }

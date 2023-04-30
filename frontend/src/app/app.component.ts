@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Shipment, TransportType} from "./models/shipment.mode";
 import {ShipmentService} from "./services/shipment.service";
+import {PlanService} from "./services/plan.service";
+import {Plan} from "./models/plan.mode";
 
 @Component({
   selector: 'app-root',
@@ -15,18 +17,27 @@ export class AppComponent implements OnInit{
 
   shipments: Shipment[] = [];
   selectedShipments: Shipment[] = [];
+  plans: Plan[] = [];
 
   constructor(
-      private shipmentService: ShipmentService
+      private shipmentService: ShipmentService,
+      private planService: PlanService
   ) {
   }
 
   ngOnInit(): void {
-    this.fetchShipments()
+    this.fetchShipments();
+    this.fetchPlans();
   }
   fetchShipments() {
     this.shipmentService.getShipments().subscribe(data => {
       this.shipments = data;
+    });
+  }
+
+  fetchPlans() {
+    this.planService.getPlans().subscribe(data => {
+      this.plans = data;
     });
   }
 

@@ -1,9 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {Shipment, TransportType} from "../../models/shipment.mode";
 import {ShipmentService} from "../../services/shipment.service";
 import {TemplateService} from "../../services/template.service";
 import {Template} from "../../models/template.mode";
 import {PlanService} from "../../services/plan.service";
+import {EventEmitter} from "protractor";
+import {Plan} from "../../models/plan.mode";
 
 @Component({
   selector: 'execution-plan-model',
@@ -17,6 +19,8 @@ export class ExecutionPlanModelComponent implements OnInit {
 
   @Input()
   selectedShipments: Shipment[];
+
+  // @Output() notifyParent: EventEmitter = new EventEmitter();
 
   constructor(
       private templateService: TemplateService,
@@ -43,11 +47,13 @@ export class ExecutionPlanModelComponent implements OnInit {
       this.planService.createPlan(execPlan).subscribe(
           res => {
             console.log('Execution plan created successfully');
+
           },
           error => {
             console.error('Error creating execution plan', error);
           }
       );
+
     })
   }
 
