@@ -1,5 +1,6 @@
 package com.kn.containershipment.service
 
+import com.kn.containershipment.dto.ExecutionPlanDto
 import com.kn.containershipment.model.ExecutionPlan
 import com.kn.containershipment.model.ExecutionPlanAction
 import com.kn.containershipment.model.Shipment
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service
 class ExecutionPlanService(
         private val temperatureRangeRepository: TemperatureRangeRepository,
         private val templateRepository: TemplateRepository,
-        private val executionPlanRepository: ExecutionPlanRepository
+        private val executionPlanRepository: ExecutionPlanRepository,
+        private val shipmentRepository: ShipmentRepository
 ) {
     fun createExecutionPlan(streamShipment: Shipment) {
         val shipment = Shipment(
@@ -49,5 +51,34 @@ class ExecutionPlanService(
             }
             executionPlanRepository.save(executionPlan)
         }
+    }
+
+    fun createExecutionPlan(executionPlanDto: ExecutionPlanDto): ExecutionPlan {
+
+        val shipment = executionPlanDto.shipment?.id?.let { shipmentRepository.findById(it).get() }
+
+        val template = templateRepository.findById(executionPlanDto.templateId).get()
+
+        val actions = template.actions
+
+        val executionPlan = ExecutionPlan(
+                shipment = shipment,
+                templateId = template.id,
+        )
+
+        for (action in actions) {
+            val executionPlanAction = shipment?.let {
+                ExecutionPlanAction(
+                        actionName = action.name,
+                        isNotify = it.notifyCustomer,
+                        isExecuted = true,
+                        executionPlan = executionPlan
+                )
+            }
+            if (executionPlanAction != null) {
+                executionPlan.actions.add(executionPlanAction)
+            }
+        }
+        return executionPlanRepository.save(executionPlan)
     }
 }

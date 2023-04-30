@@ -1,5 +1,6 @@
 package com.kn.containershipment.dto
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.kn.containershipment.model.TransportType
 
 /**
@@ -26,6 +27,8 @@ data class ExecutionPlanActionDto(
 }
 
 data class ShipmentDto(
+
+        @JsonProperty("shipmentId")
         var id: Long = 0,
         var origin: String? = null,
         var destination: String? = null,
