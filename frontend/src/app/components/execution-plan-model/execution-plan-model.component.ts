@@ -29,4 +29,8 @@ export class ExecutionPlanModelComponent implements OnInit {
       this.templates = data;
     })
   }
+
+  createExecutionPlan() {
+    // alert(JSON.stringify(shipment))
+  }
 }

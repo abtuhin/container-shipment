@@ -24,9 +24,11 @@ data class Shipment(
 
         val notifyCustomer: Boolean = false,
 
+
+        @Enumerated(EnumType.STRING)
         val transportType: TransportType? = null,
 
-        @OneToOne(cascade = [CascadeType.DETACH], orphanRemoval = true, fetch = FetchType.LAZY)
+        @OneToOne(cascade = [CascadeType.MERGE], orphanRemoval = true, fetch = FetchType.EAGER)
         @JoinColumn(name = "fk_temperature_range_id")
         @JsonProperty("temperature")
         var temperatureRange: TemperatureRange? = null

@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class ExecutionPlanService(
-        private val shipmentRepository: ShipmentRepository,
         private val temperatureRangeRepository: TemperatureRangeRepository,
         private val templateRepository: TemplateRepository,
-        private val executionPlanRepository: ExecutionPlanRepository,
-        private val executionPlanActionRepository: ExecutionPlanActionRepository
+        private val executionPlanRepository: ExecutionPlanRepository
 ) {
     fun createExecutionPlan(streamShipment: Shipment) {
         val shipment = Shipment(

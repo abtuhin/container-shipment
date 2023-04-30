@@ -14,7 +14,7 @@ data class ExecutionPlan(
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0,
 
-        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
         @JoinColumn(name = "fk_shipment_id")
         val shipment: Shipment? = null,
 
