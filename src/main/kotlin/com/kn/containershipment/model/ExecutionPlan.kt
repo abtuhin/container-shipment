@@ -14,15 +14,14 @@ data class ExecutionPlan(
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0,
 
-        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
         @JoinColumn(name = "fk_shipment_id")
         val shipment: Shipment? = null,
 
         val templateId: Long = 0,
 
-        @OneToMany(targetEntity = ExecutionPlanAction::class, cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-        @JoinColumn(name = "e_pta_fk", referencedColumnName = "id")
-        val actions: List<ExecutionPlanAction> = listOf()
+        @OneToMany(mappedBy = "executionPlan", cascade = [CascadeType.ALL], orphanRemoval = true)
+        val actions: MutableList<ExecutionPlanAction> = mutableListOf(),
 )
 
 /**
@@ -40,5 +39,10 @@ data class ExecutionPlanAction(
 
         val isExecuted: Boolean = false,
 
-        val isNotify: Boolean = false
+        val isNotify: Boolean = false,
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "execution_plan_id")
+        val executionPlan: ExecutionPlan? = null
+
 )
