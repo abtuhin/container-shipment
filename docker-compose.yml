@@ -19,7 +19,12 @@ services:
       PUBLISH_FREQUENCY: 5
   
   # Run the backend as docker here
-  #backend:
-  #.......
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq-publisher
+
 
 
